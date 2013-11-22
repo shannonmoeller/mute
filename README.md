@@ -6,9 +6,9 @@
 
 ```javascript
 it('should shut the heck up', function (done) {
-    mute(function(unmute) {
-        app.options.defaults = true;
+    app.options.defaults = true;
 
+    mute(function(unmute) {
         app.run(function() {
             unmute();
 
