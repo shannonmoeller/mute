@@ -34,3 +34,7 @@ $ npm install --save-dev mute
 ## License
 
 MIT
+
+## Stats
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/shannonmoeller/mute/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
