@@ -45,6 +45,15 @@ module.exports = function mute(callback) {
     try {
         retval = callback(unmute);
 
+        if (typeof retval !== 'undefined' && typeof retval.then === 'function') {
+            return retval.catch(function (err) {
+                unmute();
+                throw err;
+            }).then(function () {
+                unmute();
+            });
+        }
+
         if (callback.length === 0) {
             unmute();
         }
