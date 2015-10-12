@@ -4,7 +4,7 @@
   "description": "Politely tells stdout and stderr to shut the heck up for a moment.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/shannonmoeller/mute/issues"
   },
-  "homepage": "https://github.com/shannonmoeller/mute"
+  "homepage": "https://github.com/shannonmoeller/mute",
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
 }
