@@ -1,57 +1,62 @@
-/*jshint node:true */
 'use strict';
 
 /**
- * Politely tells stdout and stderr to shut the heck up for a moment by
- * temporarily reassigning the stream's write methods. Useful when testing
- * overly noisey things like Yeoman generators.
+ * Politely tells one or more streams to shut the heck up for a moment by
+ * temporarily reassigning their write methods. Useful when testing noisey
+ * modules which lack verbosity options. Mutes `stdout` and `stderr` by default.
  *
  * @example
- *     mute(function(unmute) {
- *         app.options.defaults = true;
+ *     var unmute = mute();
  *
- *         app.run(function() {
- *             unmute();
+ *     console.log('foo');   // doesn't print 'foo'
+ *     console.error('bar'); // doesn't print 'bar'
  *
- *             helpers.assertFiles([
- *                 ['package.json', /"name": "temp-directory"/],
- *                 ['README.md',    /# TEMP.Directory/]
- *             ]);
+ *     unmute();
  *
- *             done();
- *         });
- *     });
+ *     console.log('foo');   // prints 'foo'
+ *     console.error('bar'); // prints 'bar'
  *
  * @type Function
- * @param {Function} callback A function containing noisey code.
- * @return {Any} The return value of the callback, if any.
+ * @param {Stream,Array.<Stream>} ...streams Streams to mute. Defaults to `stdout` and `stderr`.
+ * @return {Function} An unmute function.
  */
-module.exports = function mute(callback) {
-    if (typeof callback !== 'function') {
+
+var concat = Array.prototype.concat;
+
+function mute(stream) {
+    var write = stream && stream.write;
+    var orig = write && write.write;
+
+    if (orig) {
         return;
     }
 
-    var retval = null;
-    var stdout = process.stdout.write;
-    var stderr = process.stderr.write;
-    var unmute = function() {
-        process.stdout.write = stdout;
-        process.stderr.write = stderr;
-    };
+    function noop() {}
+    noop.write = write;
+    stream.write = noop;
+}
 
-    process.stdout.write = function() {};
-    process.stderr.write = function() {};
+function unmute(stream) {
+    var write = stream && stream.write;
+    var orig = write && write.write;
 
-    try {
-        retval = callback(unmute);
-
-        if (callback.length === 0) {
-            unmute();
-        }
-
-        return retval;
-    } catch (e) {
-        unmute();
-        throw e;
+    if (!orig) {
+        return;
     }
+
+    stream.write = orig;
+}
+
+module.exports = function muteStreams() {
+    var streams = concat.apply([], arguments);
+
+    if (!streams.length) {
+        streams = [process.stdout, process.stderr];
+    }
+
+    streams.forEach(mute);
+
+    return function unmuteStreams() {
+        streams.forEach(unmute);
+    };
 };

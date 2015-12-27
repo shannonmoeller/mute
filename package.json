@@ -4,7 +4,7 @@
   "description": "Politely tells stdout and stderr to shut the heck up for a moment.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc -r html -r text ava test.js"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/shannonmoeller/mute/issues"
   },
-  "homepage": "https://github.com/shannonmoeller/mute"
+  "homepage": "https://github.com/shannonmoeller/mute",
+  "devDependencies": {
+    "ava": "^0.8.0",
+    "nyc": "^5.0.1"
+  }
 }
