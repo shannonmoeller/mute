@@ -24,6 +24,12 @@ console.log('foo');   // prints 'foo'
 console.error('bar'); // prints 'bar'
 ```
 
+## API
+
+### `mute(...stream)`
+
+Accepts one or more streams or arrays of streams, mutes them all, and returns a function to unmute them.
+
 ## Test
 
 ```
