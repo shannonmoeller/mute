@@ -7,7 +7,7 @@ Politely tells one or more streams to shut the heck up for a moment by temporari
 ## Install
 
 ```
-$ npm install --save async-map-stream
+$ npm install --save mute
 ```
 
 ## Usage
