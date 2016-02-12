@@ -14,6 +14,8 @@ $ npm install --save mute
 
 ```js
 var mute = require('mute');
+
+// Mute stdout and stderr
 var unmute = mute();
 
 console.log('foo');   // doesn't print 'foo'
@@ -23,11 +25,22 @@ unmute();
 
 console.log('foo');   // prints 'foo'
 console.error('bar'); // prints 'bar'
+
+// Mute just stderr
+var unmuteErr = mute(process.stderr);
+
+console.log('foo');   // prints 'foo'
+console.error('bar'); // doesn't print 'bar'
+
+unmuteErr();
+
+console.log('foo');   // prints 'foo'
+console.error('bar'); // prints 'bar'
 ```
 
 ## API
 
-### `mute(...stream)`
+### `mute(...stream): Function()`
 
 Accepts one or more streams or arrays of streams, mutes them all, and returns a function to unmute them.
 
