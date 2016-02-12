@@ -1,6 +1,6 @@
 {
   "name": "mute",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Politely tells stdout and stderr to shut the heck up for a moment.",
   "main": "index.js",
   "scripts": {
