@@ -13,6 +13,7 @@ $ npm install --save mute
 ## Usage
 
 ```js
+var mute = require('mute');
 var unmute = mute();
 
 console.log('foo');   // doesn't print 'foo'
